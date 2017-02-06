@@ -1,0 +1,63 @@
+query ($login:String!) {
+    githubProfile: user(login: $login) {
+        ...UserInfo
+        starredRepositories(first: 100) {
+            edges {
+                node {
+                    ...RepositoryInfo
+                }
+            }
+        }
+        organizations(first: 100) {
+            totalCount
+            pageInfo {
+                ...Paging
+            }
+            nodes {
+                ...OrganisationInfo
+            }
+        }
+        repositories(first: 100) {
+            totalCount
+            pageInfo {
+                ...Paging
+            }
+            edges {
+                node {
+                    ...RepositoryInfo
+                }
+            }
+        }
+    }
+}
+
+fragment UserInfo on User {
+    name
+    avatarURL
+    websiteURL
+    bio
+    company
+    location
+    followers(first: 100) {
+        totalCount
+    }
+}
+
+fragment OrganisationInfo on Organization {
+    name
+    avatarURL
+}
+
+fragment RepositoryInfo on Repository {
+    githubId: id
+    githubUrl: url
+    name
+    homepageURL
+    isFork
+    isPrivate
+}
+
+fragment Paging on PageInfo {
+    endCursor
+    hasNextPage
+}
