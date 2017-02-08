@@ -43,6 +43,7 @@ fragment UserInfo on User {
     bio
     company
     location
+    email
     followers(first: 100) {
         totalCount
     }

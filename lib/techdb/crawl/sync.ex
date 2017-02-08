@@ -4,7 +4,7 @@ defmodule Techdb.Crawl.Sync do
   alias Techdb.Store.Graph, as: Graph
 
   def sync do
-    crawl_users(["adri"])
+    crawl_users(["lapistano"])
       |> Enum.map(&(extract_users(&1)))
       |> IO.inspect
       |> Enum.map(&(crawl_users(&1)))
@@ -13,8 +13,12 @@ defmodule Techdb.Crawl.Sync do
   defp extract_users(user) do
     user
       |> get_in(["starredRepositories", "edges"])
-      |> Enum.filter_map(&(&1["node"]["owner"]["login"] != nil), &(&1["node"]["owner"]["login"]))
+      |> Enum.filter_map(&(owner_login(&1) != nil), &(owner_login(&1)))
       |> Enum.uniq
+  end
+
+  defp owner_login(repo) do
+    repo["node"]["owner"]["login"]
   end
 
   defp crawl_users(users) do

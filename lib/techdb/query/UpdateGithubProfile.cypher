@@ -10,6 +10,7 @@ ON CREATE SET
   github.bio = $user.bio,
   github.company = $user.company,
   github.location = $user.location,
+  github.email = $user.email,
   github.followersCount = $user.followers.totalCount
 
 // Link GithubProfile to Organizations

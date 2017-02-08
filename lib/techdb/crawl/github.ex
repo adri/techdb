@@ -26,7 +26,7 @@ defmodule Techdb.Crawl.Github do
       body |> Poison.decode!
     end
 
-  defp query(query, variables) do
+  defp query(query, variables \\ %{}) do
     post("", [
       body: Poison.encode! %{
         :query => query,

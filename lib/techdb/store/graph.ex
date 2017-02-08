@@ -10,7 +10,28 @@ defmodule Techdb.Store.Graph do
     user
   end
 
-  defp query(query, parameters) do
+  def store_twitter_profile(user) do
+    read_query("UpdateTwitterProfile.cypher")
+      |> query(%{"user" => user})
+
+    user
+  end
+
+  def github_user_crawled_twitter(login) do
+    read_query("UpdateGithubUserCrawledTwitter.cypher")
+      |> query(%{"login" => login})
+  end
+
+  def logins_for_twitter() do
+    read_query("FindGithubLoginsForTwitter.cypher")
+      |> query
+      |> Enum.map(&(&1["github.login"]))
+      |> Enum.filter(&(&1 != nil))
+  end
+
+#  ----
+
+  defp query(query, parameters \\ %{}) do
     Bolt.Sips.query!(Bolt.Sips.conn, query, parameters)
   end
 

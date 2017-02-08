@@ -19,7 +19,7 @@ defmodule Techdb.Mixfile do
   def application do
     [mod: {Techdb, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :bolt_sips, :httpotion]]
+                    :phoenix_ecto, :postgrex, :bolt_sips, :httpotion, :extwitter]]
   end
 
   # Specifies which paths to compile per environment.
@@ -41,6 +41,7 @@ defmodule Techdb.Mixfile do
      {:bolt_sips, "~> 0.1"},
      {:httpotion, "~> 3.0.2"},
      {:poison, "~> 2.0"},
+     {:extwitter, "~> 0.8"},
      {:credo, "~> 0.5", only: [:dev, :test]}
      ]
   end
