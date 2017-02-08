@@ -1,9 +1,12 @@
 query ($login:String!) {
-    githubProfile: user(login: $login) {
+    user(login: $login) {
         ...UserInfo
         starredRepositories(first: 100) {
             edges {
                 node {
+                    owner {
+                        ...UserInfo
+                    }
                     ...RepositoryInfo
                 }
             }
@@ -32,7 +35,9 @@ query ($login:String!) {
 }
 
 fragment UserInfo on User {
+    githubId: id
     name
+    login
     avatarURL
     websiteURL
     bio
@@ -44,11 +49,14 @@ fragment UserInfo on User {
 }
 
 fragment OrganisationInfo on Organization {
+    organizationId: id
     name
     avatarURL
+    url
 }
 
 fragment RepositoryInfo on Repository {
+    repositoryId: id
     githubId: id
     githubUrl: url
     name

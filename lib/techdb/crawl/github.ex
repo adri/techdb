@@ -2,26 +2,36 @@ defmodule Techdb.Crawl.Github do
   @moduledoc false
   use HTTPotion.Base
 
-  def process_url(url) do
+  alias Techdb.Query.Query, as: Query
+
+  @spec user_profile(String.t) :: Map
+  def user_profile(login) do
+    Query.read_query("GithubProfile.graphql")
+      |> query(%{:login => login})
+  end
+
+#  ----
+
+  defp process_url(url) do
     "https://api.github.com/graphql" <> url
   end
 
-  def process_request_headers(headers) do
+  defp process_request_headers(headers) do
     headers
       |> Dict.put(:"User-Agent", "github-potion")
-      |> Dict.put(:"Authorization", "Bearer 3acd62921a5a63b2ceb7947694846b7cc53ab447")
+      |> Dict.put(:"Authorization", "Bearer " <> Application.get_env(:techdb, :github_token))
   end
 
-  def query(query, variables) do
+   def process_response_body(body) do
+      body |> Poison.decode!
+    end
+
+  defp query(query, variables) do
     post("", [
       body: Poison.encode! %{
-        :query => File.read!(Path.expand("lib/techdb/crawl/" <> query)),
+        :query => query,
         :variables => variables
       }
-    ])
-  end
-
-  def user_profile(login) do
-    query("github/GithubProfile.graphql", %{ :login => login })
+    ]).body
   end
 end

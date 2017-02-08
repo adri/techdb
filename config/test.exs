@@ -17,3 +17,9 @@ config :techdb, Techdb.Repo,
   database: "techdb_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :bolt_sips, Bolt,
+  url: 'localhost:7687',
+  basic_auth: [username: "neo4j", password: "tester"],
+  pool_size: 5,
+  max_overflow: 1

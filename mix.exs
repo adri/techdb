@@ -40,7 +40,8 @@ defmodule Techdb.Mixfile do
      {:cowboy, "~> 1.0"},
      {:bolt_sips, "~> 0.1"},
      {:httpotion, "~> 3.0.2"},
-     {:poison, "~> 2.0"}
+     {:poison, "~> 2.0"},
+     {:credo, "~> 0.5", only: [:dev, :test]}
      ]
   end
 
