@@ -10,10 +10,10 @@ config :techdb,
   ecto_repos: [Techdb.Repo]
 
 # Configures the endpoint
-config :techdb, Techdb.Endpoint,
+config :techdb, Techdb.Web.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "qSqFw17Mfdkll1AA1ZY9xzIPhrbwilBrFmZ3lad7qAxiHhwyXPGJ3CO+YaPi9hd2",
-  render_errors: [view: Techdb.ErrorView, accepts: ~w(html json)],
+  secret_key_base: "S6Fr4j7WX+6mAdfahztTX9lmxwRCuMgAW46Eqdcd9ZTZNN2xLZ2u8SwPsY++qHNm",
+  render_errors: [view: Techdb.Web.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Techdb.PubSub,
            adapter: Phoenix.PubSub.PG2]
 

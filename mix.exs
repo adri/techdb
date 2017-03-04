@@ -4,7 +4,7 @@ defmodule Techdb.Mixfile do
   def project do
     [app: :techdb,
      version: "0.0.1",
-     elixir: "~> 1.2",
+     elixir: "~> 1.4",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -17,33 +17,36 @@ defmodule Techdb.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Techdb, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :bolt_sips, :httpotion, :extwitter]]
+    [mod: {Techdb.Application, []},
+     extra_applications: [:logger]]
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
-  defp elixirc_paths(_),     do: ["lib", "web"]
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_),     do: ["lib"]
 
   # Specifies your project dependencies.
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.2.1"},
+    [{:phoenix, "~> 1.3.0-rc"},
      {:phoenix_pubsub, "~> 1.0"},
-     {:phoenix_ecto, "~> 3.0"},
+     {:phoenix_ecto, "~> 3.2"},
      {:postgrex, ">= 0.0.0"},
      {:phoenix_html, "~> 2.6"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"},
+
      {:bolt_sips, "~> 0.1"},
      {:httpotion, "~> 3.0.2"},
      {:poison, "~> 2.0"},
      {:extwitter, "~> 0.8"},
+     {:ex_rated, "~> 1.2"},
+     {:phoenix_live_reload, "~> 1.0", only: :dev},
+#     {:exvcr, "~> 0.8", only: :test},
      {:credo, "~> 0.5", only: [:dev, :test]}
-     ]
+    ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

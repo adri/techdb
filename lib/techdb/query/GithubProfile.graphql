@@ -1,7 +1,7 @@
 query ($login:String!) {
     user(login: $login) {
         ...UserInfo
-        starredRepositories(first: 100) {
+        starredRepositories(first: 50) {
             edges {
                 node {
                     owner {
@@ -11,7 +11,7 @@ query ($login:String!) {
                 }
             }
         }
-        organizations(first: 100) {
+        organizations(first: 50) {
             totalCount
             pageInfo {
                 ...Paging
@@ -20,7 +20,7 @@ query ($login:String!) {
                 ...OrganisationInfo
             }
         }
-        repositories(first: 100) {
+        repositories(first: 50) {
             totalCount
             pageInfo {
                 ...Paging

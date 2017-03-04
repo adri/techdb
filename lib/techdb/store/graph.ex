@@ -20,10 +20,19 @@ defmodule Techdb.Store.Graph do
   def github_user_crawled_twitter(login) do
     read_query("UpdateGithubUserCrawledTwitter.cypher")
       |> query(%{"login" => login})
+
+    login
   end
 
   def logins_for_twitter() do
     read_query("FindGithubLoginsForTwitter.cypher")
+      |> query
+      |> Enum.map(&(&1["github.login"]))
+      |> Enum.filter(&(&1 != nil))
+  end
+
+  def find_repo_owners() do
+    read_query("FindRepoOwners.cypher")
       |> query
       |> Enum.map(&(&1["github.login"]))
       |> Enum.filter(&(&1 != nil))

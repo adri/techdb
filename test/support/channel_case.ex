@@ -1,11 +1,11 @@
-defmodule Techdb.ChannelCase do
+defmodule Techdb.Web.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
 
   Such tests rely on `Phoenix.ChannelTest` and also
   import other functionality to make it easier
-  to build and query models.
+  to build common datastructures and query the data layer.
 
   Finally, if the test case interacts with the database,
   it cannot be async. For this reason, every test runs
@@ -20,24 +20,18 @@ defmodule Techdb.ChannelCase do
       # Import conveniences for testing with channels
       use Phoenix.ChannelTest
 
-      alias Techdb.Repo
-      import Ecto
-      import Ecto.Changeset
-      import Ecto.Query
-
-
       # The default endpoint for testing
-      @endpoint Techdb.Endpoint
+      @endpoint Techdb.Web.Endpoint
     end
   end
+
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Techdb.Repo)
-
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Techdb.Repo, {:shared, self()})
     end
-
     :ok
   end
+
 end
