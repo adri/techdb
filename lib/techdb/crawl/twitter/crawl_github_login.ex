@@ -19,7 +19,7 @@ defmodule Techdb.Crawl.Twitter.CrawlGithubLogin do
       |> Stream.map(&(PotentialTwitterProfile.from_github(&1)))
       |> Stream.map(&find_twitter_profile(&1))
       |> Stream.filter(&(PotentialTwitterProfile.has_profile?(&1)))
-      |> Stream.map(&(store_twitter(&1)))
+      |> Stream.map(&(store_twitter_profile(&1)))
       |> Stream.map(&(store_github_crawled_twitter(&1)))
       |> Enum.to_list
   end
@@ -28,7 +28,7 @@ defmodule Techdb.Crawl.Twitter.CrawlGithubLogin do
     %{profile | twitter_profile: Twitter.user_profile(profile.github_login) }
   end
 
-  defp store_twitter(profile) do
+  defp store_twitter_profile(profile) do
     Graph.store_twitter_profile(profile.twitter_profile)
     profile
   end

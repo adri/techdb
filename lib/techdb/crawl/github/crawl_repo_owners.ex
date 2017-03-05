@@ -4,16 +4,23 @@ defmodule Techdb.Crawl.Github.CrawlRepoOwners do
   alias Techdb.Store.Graph, as: Graph
 
   def crawl do
-    ["SlexAxton"]  # replace this with "get users to crawl"
-      |> Stream.map(&(Github.user_profile(&1)))
-      |> Stream.map(&(store_user(&1)))
-      |> Stream.map(&(starred_repo_owners(&1)))
+    ["lapistano"]  # replace this with "get users to crawl"
+      |> Stream.map(&crawl_login(&1))
+      |> Stream.map(&starred_repo_owners(&1))
+      |> Stream.flat_map(fn(x) -> x end)
+      |> Stream.map(&crawl_login(&1))
       |> Enum.to_list
+  end
+
+  defp crawl_login(login)  do
+    login
+      |> Github.user_profile
+      |> store_user
   end
 
   defp starred_repo_owners(user) do
     user
-      |> get_in(["starredRepositories", "edges"])
+      |> get_in(["data", "user", "starredRepositories", "edges"])
       |> Stream.filter_map(&(owner_login(&1) != nil), &(owner_login(&1)))
       |> Stream.uniq
   end
